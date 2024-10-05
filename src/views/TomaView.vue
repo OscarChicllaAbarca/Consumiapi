@@ -2,12 +2,11 @@
     <div class="form-container">
       <h2>Carga de Productos</h2>
       <form @submit.prevent="submitForm">
+
         <label for="fecha_toma">Fecha Toma:</label>
         <input type="date" v-model="productData.Fecha_Toma" required>
-  
         <label for="ubicacion">Ubicación:</label>
         <input type="text" v-model="productData.Ubicacion" required>
-  
         <label for="producto">Producto:</label>
         <input type="text" v-model="productData.Producto" required>
   
