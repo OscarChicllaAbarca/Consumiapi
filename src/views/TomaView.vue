@@ -33,7 +33,6 @@
             <option value="">Seleccione un lote</option>
             <option value="Reparado">Reparado</option>
             <option value="Nuevo">Nuevo</option>
-            <option value="Lote C">Lote C</option>
         </select>
 
         <label for="unidad_medida">Unidad de Medida Base:</label>
@@ -161,8 +160,6 @@ export default {
     }
 };
 </script>
-
-   
 <style>
 .form-container {
     max-width: 500px;
