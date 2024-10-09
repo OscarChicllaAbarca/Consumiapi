@@ -98,7 +98,7 @@ export default {
         async fetchHannaData() {
             if (this.productData.producto !== '') {
                 try {
-                    const response = await fetch(`http://localhost:9090/api/product/${this.productData.producto}`);
+                    const response = await fetch(`http://localhost:9090/api/products/${this.productData.producto}`);
                     if (response.ok) {
                         const data = await response.json();
                         this.productData.descripcionProducto = data.descriptionProduct; 
