@@ -101,8 +101,8 @@ export default {
                     const response = await fetch(`http://localhost:9090/api/product/${this.productData.producto}`);
                     if (response.ok) {
                         const data = await response.json();
-                        this.productData.descripcionProducto = data.textoMaterial; 
-                        this.productData.unidadMedidaBase = data.unidadBase; 
+                        this.productData.descripcionProducto = data.descriptionProduct; 
+                        this.productData.unidadMedidaBase = data.unitMeasurement; 
                     } else {
                         console.error('Error al obtener los datos de Hanna');
                     }
