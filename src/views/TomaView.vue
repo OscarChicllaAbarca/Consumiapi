@@ -7,10 +7,10 @@
         <input type="date" v-model="productData.fechaToma" required disabled>
 
         <label for="id_producto">Ubicacion:</label>
-        <input type="text" v-model="productData.ubicacion" @input="fetchHannaData" required placeholder="00-00-000-000">
+        <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000">
 
         <label for="producto">Producto:</label>
-        <input type="text" v-model="productData.producto" required>
+        <input type="text" v-model="productData.producto" @input="buscarProducto" required>
 
         <label for="descripcion">Descripción de Producto:</label>
         <input type="text" v-model="productData.descripcionProducto" required readonly>
@@ -33,6 +33,8 @@
             <option value="">Seleccione un lote</option>
             <option value="Reparado">Reparado</option>
             <option value="Nuevo">Nuevo</option>
+            <option value="Garantia">Nuevo</option>
+            <option value="Observado">Nuevo</option>
         </select>
 
         <label for="unidad_medida">Unidad de Medida Base:</label>
@@ -70,8 +72,6 @@
 </div>
 </template>
 
-    
-    
 <script>
 export default {
     data() {
@@ -94,16 +94,27 @@ export default {
         };
     },
     methods: {
-        async fetchHannaData() {
+        async buscarProducto() {
+            
             if (this.productData.producto !== '') {
                 try {
-                    const response = await fetch(`http://localhost:9090/api/products/${this.productData.producto}`);
+                   
+                    const codigoProducto = this.productData.producto; // Cambiar '1590464\\AIL' por 'this.productData.producto'
+
+                    // Comprobar si contiene barra invertida y eliminarla si es necesario
+                    let codigoProductoFinal = codigoProducto;
+                    if (codigoProducto.includes('\\')) {
+                        codigoProductoFinal = codigoProducto.replace(/\\/g, ''); // O reemplaza con otro carácter, si es necesario
+                    }
+
+                    // Realizar la solicitud a la API con el código procesado
+                    const response = await fetch(`http://localhost:9090/api/products/${codigoProductoFinal}`);
                     if (response.ok) {
                         const data = await response.json();
-                        this.productData.descripcionProducto = data.descriptionProduct; 
-                        this.productData.unidadMedidaBase = data.unitMeasurement; 
+                        this.productData.descripcionProducto = data.descriptionProduct;
+                        this.productData.unidadMedidaBase = data.unitMeasurement;
                     } else {
-                        console.error('Error al obtener los datos de Hanna');
+                        console.error('Error al obtener los datos del producto:', response.status, response.statusText);
                     }
                 } catch (error) {
                     console.error('Error al realizar la solicitud:', error);
@@ -160,6 +171,7 @@ export default {
     }
 };
 </script>
+
 <style>
 .form-container {
     max-width: 500px;
