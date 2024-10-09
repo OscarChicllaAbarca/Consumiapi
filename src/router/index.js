@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+
 import CreateView from '../views/CreateView.vue';
 import EditView from '../views/EditView.vue';
 import AboutView from '../views/AboutView.vue';
@@ -7,13 +7,10 @@ import GraficaView from '../views/GraficaView.vue';
 import ReporteView from '../views/ReporteView.vue';
 import TomaView from '../views/TomaView.vue';
 
+
 import ListarTomaView from '@/views/ListarTomaView.vue';
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
+  
   {
     path: '/create',
     name: 'create',

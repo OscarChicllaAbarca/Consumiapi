@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <router-link to="/Toma" class="nav-link" href="#">Lista</router-link>
+          <router-link to="/Lista" class="nav-link" href="#">Lista</router-link>
         </li>
         <li class="nav-item">
           <router-link to="/Toma" class="nav-link" href="#">Carga</router-link>
