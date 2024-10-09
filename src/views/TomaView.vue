@@ -96,13 +96,13 @@ export default {
     },
     methods: {
         async fetchHannaData() {
-            if (this.productData.ubicacion !== '') {
+            if (this.productData.producto !== '') {
                 try {
-                    const response = await fetch(`http://localhost:9090/api/hanna/${this.productData.ubicacion}`);
+                    const response = await fetch(`http://localhost:9090/api/product/${this.productData.producto}`);
                     if (response.ok) {
                         const data = await response.json();
-                        this.productData.producto = data.textoMaterial; // Asegúrate de que este campo coincida con tu estructura de datos
-                        this.productData.unidadMedidaBase = data.unidadBase; // Asegúrate de que este campo coincida con tu estructura de datos
+                        this.productData.descripcionProducto = data.textoMaterial; 
+                        this.productData.unidadMedidaBase = data.unidadBase; 
                     } else {
                         console.error('Error al obtener los datos de Hanna');
                     }
