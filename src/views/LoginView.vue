@@ -35,7 +35,7 @@
     <div class="intros-container">
       <div class="intro-control signin-intro">
         <div class="intro-control__inner">
-          <h2>¡Bienvenido de nuevo!</h2>
+          <h2>¡Bienvenido!</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates vitae ullam omnis maxime, ex tempore! Officia ipsam illum facilis, fugiat accusantium laborum cupiditate distinctio commodi? Amet aliquam est exercitationem odit?
           </p>
@@ -44,7 +44,7 @@
       </div>
       <div class="intro-control signup-intro">
         <div class="intro-control__inner">
-          <h2>¡Ven y únete a nosotros!</h2>
+          <h2>¡Registrate en CGM Rental!</h2>
           <p>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti earum delectus odio neque vel adipisci sint rem quo tempora sunt quisquam possimus eos molestias, doloribus dolorum cupiditate aspernatur temporibus totam.
           </p>
