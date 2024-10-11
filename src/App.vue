@@ -13,6 +13,9 @@
         <li class="nav-item">
           <router-link to="/Toma" class="nav-link" href="#">Carga</router-link>
         </li>
+        <li class="nav-item">
+          <router-link to="/Login" class="nav-link" href="#">Login</router-link>
+        </li>
       </ul>
     </div>
   </div>

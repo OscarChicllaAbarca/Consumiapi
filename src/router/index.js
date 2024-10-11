@@ -6,7 +6,7 @@ import AboutView from '../views/AboutView.vue';
 import GraficaView from '../views/GraficaView.vue';
 import ReporteView from '../views/ReporteView.vue';
 import TomaView from '../views/TomaView.vue';
-
+import LoginView from '@/views/LoginView.vue';
 
 import ListarTomaView from '@/views/ListarTomaView.vue';
 const routes = [
@@ -41,6 +41,11 @@ const routes = [
     path: '/toma',
     name: 'Toma',
     component: TomaView
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView
   },
   {
     path: '/listar_toma',
