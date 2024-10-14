@@ -95,24 +95,33 @@ export default {
     },
     methods: {
         async buscarProducto() {
-            
             if (this.productData.producto !== '') {
                 try {
-                   
-                    const codigoProducto = this.productData.producto; // Cambiar '1590464\\AIL' por 'this.productData.producto'
+                    const codigoProducto = this.productData.producto;
 
                     // Comprobar si contiene barra invertida y eliminarla si es necesario
                     let codigoProductoFinal = codigoProducto;
                     if (codigoProducto.includes('\\')) {
-                        codigoProductoFinal = codigoProducto.replace(/\\/g, ''); // O reemplaza con otro carácter, si es necesario
+                        codigoProductoFinal = codigoProducto.replace(/\\/g, '');
                     }
 
-                    // Realizar la solicitud a la API con el código procesado
-                    const response = await fetch(`http://localhost:9090/api/products/${codigoProductoFinal}`);
+                    // http://192.168.187.58:9090 colocar la ip de la maquina en la red local para que vote  movil
+                    //en caso que sea 
+                    const response = await fetch(`http://192.168.187.102:9090/api/products/b_name/${codigoProductoFinal}`);
+
                     if (response.ok) {
                         const data = await response.json();
-                        this.productData.descripcionProducto = data.descriptionProduct;
-                        this.productData.unidadMedidaBase = data.unitMeasurement;
+
+                        // Aquí asumimos que data es un arreglo, así que tomamos el primer elemento
+                        if (data.length > 0) {
+                            const producto = data[0]; // Accedemos al primer elemento del arreglo
+                            this.productData.descripcionProducto = producto.descriptionProduct;
+                            this.productData.unidadMedidaBase = producto.unitMeasurement;
+                        } else {
+                            console.error('No se encontraron productos para el código proporcionado.');
+                            this.productData.descripcionProducto = ''; // Opcional: resetear el campo
+                            this.productData.unidadMedidaBase = ''; // Opcional: resetear el campo
+                        }
                     } else {
                         console.error('Error al obtener los datos del producto:', response.status, response.statusText);
                     }
@@ -123,7 +132,7 @@ export default {
         },
         async submitForm() {
             try {
-                const response = await fetch('http://localhost:9090/api/tomas', {
+                const response = await fetch('http://192.168.187.102:9090/api/tomas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
