@@ -107,7 +107,7 @@ export default {
 
                     // http://192.168.187.58:9090 colocar la ip de la maquina en la red local para que vote  movil
                     //en caso que sea 
-                    const response = await fetch(`http://192.168.187.102:9090/api/products/b_name/${codigoProductoFinal}`);
+                    const response = await fetch(`http://192.168.11.75:9090/api/products/b_name/${codigoProductoFinal}`);
 
                     if (response.ok) {
                         const data = await response.json();
@@ -132,7 +132,7 @@ export default {
         },
         async submitForm() {
             try {
-                const response = await fetch('http://192.168.187.102:9090/api/tomas', {
+                const response = await fetch('http://192.168.11.75:9090/api/tomas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

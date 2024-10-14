@@ -96,7 +96,7 @@ export default {
     methods: {
         async obtenerTomas() {
             try {
-                const response = await axios.get('http://192.168.187.102:9090/api/tomas');
+                const response = await axios.get('http://192.168.11.75:9090/api/tomas');
                 this.tomas = response.data; // Guardar los datos de la API en la variable 'tomas'
             } catch (error) {
                 console.error('Error al obtener los datos:', error);
@@ -112,7 +112,7 @@ export default {
             if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
                 try {
                     // Hacer la solicitud DELETE a la API
-                    await axios.delete(`http://192.168.187.102:9090/api/tomas/${id}`);
+                    await axios.delete(`http://192.168.11.75:9090/api/tomas/${id}`);
                     // Filtrar el elemento eliminado de la lista
                     this.tomas = this.tomas.filter(item => item.id !== id);
                     // Limpiar la selección actual
