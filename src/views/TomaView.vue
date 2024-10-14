@@ -10,16 +10,17 @@
         <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000">
 
         <label for="producto">Producto:</label>
-        <input type="text" v-model="productData.producto" @input="buscarProducto" required>
+        <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
 
         <label for="descripcion">Descripción de Producto:</label>
         <input type="text" v-model="productData.descripcionProducto" required readonly>
 
         <label for="q">Cantidad (Q):</label>
-        <input type="number" v-model="productData.cantidad" required>
+        <input type="number" v-model="productData.cantidad" required min="1" :class="{'is-invalid': productData.cantidad <= 0}">
+        <span v-if="productData.cantidad <= 0" class="error">La cantidad debe ser mayor que 0.</span>
 
         <label for="centro">Centro:</label>
-        <select v-model="productData.centro" required class="form-select">
+        <select v-model="productData.centro" class="form-select" required>
             <option value="">Seleccione un centro</option>
             <option value="C080">C080</option>
             <option value="C152">C152</option>
@@ -29,19 +30,19 @@
         </select>
 
         <label for="lote">Lote:</label>
-        <select v-model="productData.lote" class="form-select">
+        <select v-model="productData.lote" class="form-select" required>
             <option value="">Seleccione un lote</option>
             <option value="Reparado">Reparado</option>
             <option value="Nuevo">Nuevo</option>
-            <option value="Garantia">Nuevo</option>
-            <option value="Observado">Nuevo</option>
+            <option value="Garantia">Garantía</option>
+            <option value="Observado">Observado</option>
         </select>
 
         <label for="unidad_medida">Unidad de Medida Base:</label>
         <input type="text" v-model="productData.unidadMedidaBase" required readonly>
 
         <label for="codigo_invent">Código de Inventario:</label>
-        <input type="text" v-model="productData.codigoInventario" required>
+        <input type="text" v-model="productData.codigoInventario" required :class="{'is-invalid': productData.codigoInventario === ''}">
 
         <br>
         <button @click="toggleFields" type="button" class="btn btn-primary">
@@ -62,12 +63,13 @@
 
             <div class="mb-3">
                 <label for="fecha_venc" class="form-label">Fecha de Vencimiento:</label>
-                <input type="date" v-model="productData.fechaVencimiento" id="fecha_venc" class="form-control">
+                <input type="date" v-model="productData.fechaVencimiento" id="fecha_venc" class="form-control" :class="{'is-invalid': !validarFechaVencimiento}">
+                <span v-if="!validarFechaVencimiento" class="error">La fecha de vencimiento no puede ser anterior a la fecha actual.</span>
             </div>
         </div>
 
         <br>
-        <button type="submit">Cargar Producto</button>
+        <button type="submit" :disabled="!formValido">Cargar Producto</button>
     </form>
 </div>
 </template>
@@ -78,7 +80,7 @@ export default {
         return {
             showFields: false,
             productData: {
-                fechaToma: this.getCurrentDate(),
+                fechaToma: new Date().toISOString().substr(0, 10),
                 ubicacion: '',
                 producto: '',
                 descripcionProducto: '',
@@ -92,6 +94,23 @@ export default {
                 fechaVencimiento: ''
             }
         };
+    },
+    computed: {
+        validarFechaVencimiento() {
+            // Verifica que la fecha de vencimiento no sea anterior a la fecha actual
+            const hoy = new Date().toISOString().split('T')[0];
+            return this.productData.fechaVencimiento === '' || this.productData.fechaVencimiento >= hoy;
+        },
+        formValido() {
+            return (
+                this.productData.producto !== '' &&
+                this.productData.cantidad > 0 &&
+                this.productData.centro !== '' &&
+                this.productData.codigoInventario !== '' &&
+                this.validarFechaVencimiento
+            );
+        }
+
     },
     methods: {
         async buscarProducto() {
@@ -237,5 +256,14 @@ button:hover {
 .form-group {
     margin-bottom: 10px;
 
+}
+
+.error {
+    color: red;
+    font-size: 0.9em;
+}
+
+.is-invalid {
+    border-color: red;
 }
 </style>
