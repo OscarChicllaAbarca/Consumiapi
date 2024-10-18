@@ -18,11 +18,12 @@
         </div>
       </div>
       <div class="form-control signin-form">
-        <form action="#">
+        <form @submit.prevent="login">
           <h2>Iniciar sesión</h2>
-          <input type="text" placeholder="Nombre de usuario" required />
-          <input type="password" placeholder="Contraseña" required />
-          <button>Iniciar sesión</button>
+          <!-- Usamos v-model para vincular los inputs a las propiedades del data -->
+          <input type="text" placeholder="Nombre de usuario" v-model="username" required />
+          <input type="password" placeholder="Contraseña" v-model="password" required />
+          <button type="submit">Iniciar sesión</button>
         </form>
         <span>o iniciar sesión con</span>
         <div class="socials">
@@ -60,6 +61,12 @@
 <script>
 
 export default {
+  data() {
+    return {
+      username: '',
+      password: '',
+    };
+  },
   mounted() {
     const signupBtn = document.getElementById("signup-btn");
     const signinBtn = document.getElementById("signin-btn");
@@ -71,8 +78,21 @@ export default {
     signinBtn.addEventListener("click", () => {
       mainContainer.classList.toggle("change");
     });
+  },
+  methods: {
+    login() {
+      // Simular autenticación
+      if (this.username === 'user' && this.password === '123') {
+        localStorage.setItem('authToken', 'fake-jwt-token'); // Guardar token (simulado)
+        this.$router.push({ path:'/toma'}); // Redirigir al home
+      } else {
+        alert('Credenciales incorrectas');
+      }
+    },
   }
 };
+
+
 </script>
 
 <style scoped>
