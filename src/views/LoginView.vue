@@ -80,15 +80,29 @@ export default {
     });
   },
   methods: {
-    login() {
-      // Simular autenticación
-      if (this.username === 'user' && this.password === '123') {
-        localStorage.setItem('authToken', 'fake-jwt-token'); // Guardar token (simulado)
-        this.$router.push({ path:'/toma'}); // Redirigir al home
+    async login() {
+    const authHeader = 'Basic ' + btoa(this.username + ':' + this.password);
+    
+    try {
+      // Realizar la solicitud autenticada a la API
+      const response = await fetch('http://localhost:9090/api/tomas', {
+        method: 'POST',
+        headers: {
+          'Authorization': authHeader,
+          'X-Requested-With': 'XMLHttpRequest'
+        }
+      });
+
+      if (response.ok) {
+        this.$router.push({ path:'/toma'});  // Redirige a la ruta protegida
       } else {
-        alert('Credenciales incorrectas');
+        alert('Credenciales incorrectas o no autorizado');
       }
-    },
+    } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      alert('Ocurrió un error al intentar iniciar sesión');
+    }
+  }
   }
 };
 
