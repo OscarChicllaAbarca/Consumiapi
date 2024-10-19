@@ -96,7 +96,17 @@ export default {
     methods: {
         async obtenerTomas() {
             try {
-                const response = await axios.get('http://192.168.11.75:9090/api/tomas');
+                // Recuperar el nombre de usuario y la contraseña de localStorage
+                const username = localStorage.getItem('username'); // Obtener el nombre de usuario
+                const password = localStorage.getItem('password'); // Obtener la contraseña
+                const credentials = btoa(`${username}:${password}`); // Codificar en Base64
+
+                const response = await axios.get('http://localhost:9090/api/tomas', {
+                    headers: {
+                        'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
+                    }
+                });
+
                 this.tomas = response.data; // Guardar los datos de la API en la variable 'tomas'
             } catch (error) {
                 console.error('Error al obtener los datos:', error);
@@ -111,8 +121,18 @@ export default {
         async deleteItem(id) {
             if (confirm("¿Estás seguro de que deseas eliminar este producto?")) {
                 try {
-                    // Hacer la solicitud DELETE a la API
-                    await axios.delete(`http://192.168.11.75:9090/api/tomas/${id}`);
+                    // Recuperar el nombre de usuario y la contraseña de localStorage
+                    const username = localStorage.getItem('username'); // Obtener el nombre de usuario
+                    const password = localStorage.getItem('password'); // Obtener la contraseña
+                    const credentials = btoa(`${username}:${password}`); // Codificar en Base64
+
+                    // Hacer la solicitud DELETE a la API con autenticación
+                    await axios.delete(`http://localhost:9090/api/tomas/${id}`, {
+                        headers: {
+                            'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
+                        }
+                    });
+
                     // Filtrar el elemento eliminado de la lista
                     this.tomas = this.tomas.filter(item => item.id !== id);
                     // Limpiar la selección actual
@@ -124,7 +144,6 @@ export default {
                 }
             }
         },
-
         closePanel() {
             this.selectedItem = null;
         },

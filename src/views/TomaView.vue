@@ -124,9 +124,17 @@ export default {
                         codigoProductoFinal = codigoProducto.replace(/\\/g, '');
                     }
 
-                    // http://192.168.187.58:9090 colocar la ip de la maquina en la red local para que vote  movil
-                    //en caso que sea 
-                    const response = await fetch(`http://192.168.11.75:9090/api/products/b_name/${codigoProductoFinal}`);
+                    const username = localStorage.getItem('username'); // Obtener el nombre de usuario
+                    const password = localStorage.getItem('password'); // Obtener la contraseña
+
+                    const credentials = btoa(`${username}:${password}`); // Codificar en Base64
+
+                    const response = await fetch(`http://localhost:9090/api/products/b_name/${codigoProductoFinal}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
+                        }
+                    });
 
                     if (response.ok) {
                         const data = await response.json();
@@ -151,13 +159,19 @@ export default {
         },
         async submitForm() {
             try {
-                const response = await fetch('http://192.168.11.75:9090/api/tomas', {
+                const username = localStorage.getItem('username'); // Obtener el nombre de usuario
+                const password = localStorage.getItem('password'); // Obtener la contraseña
+                const credentials = btoa(`${username}:${password}`); // Codificar en Base64
+
+                const response = await fetch('http://localhost:9090/api/tomas', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
                     },
                     body: JSON.stringify(this.productData)
                 });
+
                 if (response.ok) {
                     alert('Producto cargado exitosamente');
                     // Opcional: Reiniciar el formulario o limpiar los campos

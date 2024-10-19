@@ -58,7 +58,9 @@
 </template>
 
 <script>
-import { useRouter } from 'vue-router';
+import {
+    useRouter
+} from 'vue-router';
 import axios from 'axios';
 
 export default {
@@ -81,20 +83,26 @@ export default {
         });
     },
     methods: {
-      login() {
-            axios.post("http://localhost:9090/login", {
-                username: this.username,
-                password: this.password,
-            })
-            .then((response) => {
-                console.log(response.data);
-                this.$router.push('/toma');  // Redirigir a la ruta /toma
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-        
-      }
+        login() {
+            const credentials = btoa(`${this.username}:${this.password}`); // Codificar en Base64
+
+                    // Almacenar username y password en localStorage
+            localStorage.setItem('username', this.username); // Guardar el nombre de usuario
+            localStorage.setItem('password', this.password); // Guardar la contraseña (no recomendado por motivos de seguridad)
+
+            axios.post("http://192.168.187.83:9090/login", {}, {
+                    headers: {
+                        'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
+                    }
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    this.$router.push('/toma'); // Redirigir a la ruta /toma
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
     }
 };
 </script>
