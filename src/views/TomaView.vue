@@ -124,10 +124,9 @@ export default {
                         codigoProductoFinal = codigoProducto.replace(/\\/g, '');
                     }
 
-                    const username = localStorage.getItem('username'); // Obtener el nombre de usuario
-                    const password = localStorage.getItem('password'); // Obtener la contraseña
-
-                    const credentials = btoa(`${username}:${password}`); // Codificar en Base64
+                    const username = localStorage.getItem('username');
+                    const password = localStorage.getItem('password');
+                    const credentials = btoa(`${username}:${password}`);
 
                     const response = await fetch(`http://192.168.187.83:9090/api/products/b_name/${codigoProductoFinal}`, {
                         method: 'GET',
@@ -159,9 +158,10 @@ export default {
         },
         async submitForm() {
             try {
-                const username = localStorage.getItem('username'); // Obtener el nombre de usuario
-                const password = localStorage.getItem('password'); // Obtener la contraseña
-                const credentials = btoa(`${username}:${password}`); // Codificar en Base64
+                const username = localStorage.getItem('username');
+                const password = localStorage.getItem('password');
+
+                const credentials = btoa(`${username}:${password}`);
 
                 const response = await fetch('http://192.168.187.83:9090/api/tomas', {
                     method: 'POST',

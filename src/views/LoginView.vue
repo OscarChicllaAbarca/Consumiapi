@@ -86,7 +86,7 @@ export default {
         login() {
             const credentials = btoa(`${this.username}:${this.password}`); // Codificar en Base64
 
-                    // Almacenar username y password en localStorage
+            // Almacenar username y password en localStorage
             localStorage.setItem('username', this.username); // Guardar el nombre de usuario
             localStorage.setItem('password', this.password); // Guardar la contraseña (no recomendado por motivos de seguridad)
 
