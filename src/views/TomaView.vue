@@ -129,7 +129,7 @@ export default {
                     const password = localStorage.getItem('password');
                     const credentials = btoa(`${username}:${password}`);
 
-                    const response = await fetch(`${config.apiBaseUrl}/api/products/b_name/${codigoProductoFinal}`, {
+                    const response = await fetch(`http://192.168.83.166:9090/api/products/b_name/${codigoProductoFinal}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
@@ -164,7 +164,7 @@ export default {
 
                 const credentials = btoa(`${username}:${password}`);
 
-                const response = await fetch(`${config.apiBaseUrl}/api/tomas`, {
+                const response = await fetch('http://192.168.83.166:9090/api/tomas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
