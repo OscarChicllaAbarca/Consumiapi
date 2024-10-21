@@ -7,14 +7,6 @@
         <input type="date" v-model="productData.fechaToma" required disabled>
 
         <label for="id_producto">Ubicacion:</label><label for="id_producto">Ubicacion:</label>
-        <input 
-            type="text" 
-            v-model="productData.ubicacion" 
-            required 
-            placeholder="00-00-000-000" 
-            autofocus 
-            @keydown="handleKeyDown"
-        >
         <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000" autofocus @focus="onFocusUbicacion">
 
         <label for="producto">Producto:</label>
