@@ -6,8 +6,16 @@
         <label for="fecha_toma">Fecha Toma:</label>
         <input type="date" v-model="productData.fechaToma" required disabled>
 
-        <label for="id_producto">Ubicacion:</label>
-        <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000" autofocus>
+        <label for="id_producto">Ubicacion:</label><label for="id_producto">Ubicacion:</label>
+        <input 
+            type="text" 
+            v-model="productData.ubicacion" 
+            required 
+            placeholder="00-00-000-000" 
+            autofocus 
+            @keydown="handleKeyDown"
+        >
+        <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000" autofocus @focus="onFocusUbicacion">
 
         <label for="producto">Producto:</label>
         <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
@@ -93,7 +101,7 @@ export default {
                 observacion: '',
                 medida: '',
                 fechaVencimiento: ''
-            }
+            } ,scannedCode: ''
         };
     },
     computed: {
@@ -114,6 +122,17 @@ export default {
 
     },
     methods: {
+        handleKeyDown(event) {
+            // Captura el código escaneado
+            if (event.key === 'Enter') { // Puedes ajustar la tecla según el escáner
+                event.preventDefault(); // Previene el comportamiento por defecto de Enter
+                this.productData.ubicacion = this.scannedCode; // Asigna el código escaneado al campo de ubicación
+                this.scannedCode = ''; // Limpia el código escaneado
+            } else {
+                // Si el código no es el Enter, añade el carácter escaneado
+                this.scannedCode += event.key; // Acumula el texto escaneado
+            }
+        },
         async buscarProducto() {
             if (this.productData.producto !== '') {
                 try {
