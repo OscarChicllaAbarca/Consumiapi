@@ -62,7 +62,7 @@ import {
     useRouter
 } from 'vue-router';
 import axios from 'axios';
-
+import config from '@/config.js';
 export default {
     data() {
         return {
@@ -90,7 +90,7 @@ export default {
             localStorage.setItem('username', this.username); // Guardar el nombre de usuario
             localStorage.setItem('password', this.password); // Guardar la contraseña (no recomendado por motivos de seguridad)
 
-            axios.post("http://192.168.187.83:9090/login", {}, {
+            axios.post(`${config.apiBaseUrl}/login`, {}, {
                     headers: {
                         'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
                     }
