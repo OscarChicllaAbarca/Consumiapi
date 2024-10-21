@@ -70,7 +70,7 @@
     
                             <!-- Botones Editar y Eliminar -->
                             <div class="button-group mt-3">
-                                <button class="btn btn-primary" @click="editItem" type="button">Editar</button>
+                               <!-- <button class="btn btn-primary" @click="editItem" type="button">Editar</button>-->
                                 <button class="btn btn-danger" @click="deleteItem(selectedItem.id)" type="button">Eliminar</button>
                             </div>
                         </form>
