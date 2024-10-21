@@ -90,7 +90,7 @@ export default {
             localStorage.setItem('username', this.username); // Guardar el nombre de usuario
             localStorage.setItem('password', this.password); // Guardar la contraseña (no recomendado por motivos de seguridad)
 
-            axios.post(`${config.apiBaseUrl}/login`, {}, {
+            axios.post('http://192.168.83.166:9090/login', {}, {
                     headers: {
                         'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
                     }
