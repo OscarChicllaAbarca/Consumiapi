@@ -1,84 +1,86 @@
 <template>
-<div class="container">
-    <!-- Estructura responsiva usando Bootstrap -->
-    <div class="row">
-        <!-- Tabla de productos -->
-        <div class="col-lg-8 col-md-12">
-            <h2>Listado de Productos</h2>
-            <table class="table table-bordered table-hover">
-                <thead class="thead-light">
-                    <tr>
-                        <th>#</th>
-                        <th>Producto</th>
-                        <th>Descripción de Producto</th>
-                        <th>Ubicación</th>
-                        <th>Fecha Toma</th>
-                        <th>Centro</th>
-                        <th>Lote</th>
-                        <th>Cantidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(item, index) in tomas" :key="index" @click="selectRow(item)" :class="{ 'table-active': selectedItem === item }">
-                        <td>{{ index + 1 }}</td>
-                        <td>{{ item.producto }}</td>
-                        <td>{{ item.descripcionProducto }}</td>
-                        <td>{{ item.ubicacion }}</td>
-                        <td>{{ formatDate(item.fechaToma) }}</td>
-                        <td>{{ item.centro }}</td>
-                        <td>{{ item.lote }}</td>
-                        <td>{{ item.cantidad }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Panel de detalles -->
-        <div class="col-lg-4 col-md-12" v-if="selectedItem">
-            <div class="details-panel card">
-                <div class="card-body">
-                    <h5 class="card-title">Detalles del Producto</h5>
-                    <button class="close" @click="closePanel">&times;</button>
-
-                    <form @submit.prevent="submitForm" class="details-form">
-                        <div class="form-group">
-                            <label for="unidad_medida_base">Unidad de Medida Base:</label>
-                            <input type="text" class="form-control" v-model="selectedItem.unidadMedidaBase" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="codigo_invent">Código de Inventario:</label>
-                            <input type="text" class="form-control" v-model="selectedItem.codigoInventario" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="observacion">Observación:</label>
-                            <input type="text" class="form-control" v-model="selectedItem.observacion" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="medida">Medida:</label>
-                            <input type="text" class="form-control" v-model="selectedItem.medida" disabled>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="fecha_venc">Fecha de Vencimiento:</label>
-                            <input type="date" class="form-control" v-model="selectedItem.fechaVencimiento" disabled>
-                        </div>
-
-                        <!-- Botones Editar y Eliminar -->
-                        <div class="button-group mt-3">
-                            <button class="btn btn-primary" @click="editItem" type="button">Editar</button>
-                            <button class="btn btn-danger" @click="deleteItem(selectedItem.id)" type="button">Eliminar</button>
-
-                        </div>
-                    </form>
+    <div class="container">
+        <!-- Estructura responsiva usando Bootstrap -->
+        <div class="row">
+            <!-- Tabla de productos -->
+            <div class="col-lg-8 col-md-12">
+                <h2>Listado de Productos</h2>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>#</th>
+                                <th>Producto</th>
+                                <th>Descripción de Producto</th>
+                                <th>Ubicación</th>
+                                <th>Fecha Toma</th>
+                                <th>Centro</th>
+                                <th>Lote</th>
+                                <th>Cantidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="(item, index) in tomas" :key="index" @click="selectRow(item)" :class="{ 'table-active': selectedItem === item }">
+                                <td>{{ index + 1 }}</td>
+                                <td>{{ item.producto }}</td>
+                                <td>{{ item.descripcionProducto }}</td>
+                                <td>{{ item.ubicacion }}</td>
+                                <td>{{ formatDate(item.fechaToma) }}</td>
+                                <td>{{ item.centro }}</td>
+                                <td>{{ item.lote }}</td>
+                                <td>{{ item.cantidad }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    
+            <!-- Panel de detalles -->
+            <div class="col-lg-4 col-md-12" v-if="selectedItem">
+                <div class="details-panel card">
+                    <div class="card-body">
+                        <h5 class="card-title">Detalles del Producto</h5>
+                        <button class="close" @click="closePanel">&times;</button>
+    
+                        <form @submit.prevent="submitForm" class="details-form">
+                            <div class="form-group">
+                                <label for="unidad_medida_base">Unidad de Medida Base:</label>
+                                <input type="text" class="form-control" v-model="selectedItem.unidadMedidaBase" disabled>
+                            </div>
+    
+                            <div class="form-group">
+                                <label for="codigo_invent">Código de Inventario:</label>
+                                <input type="text" class="form-control" v-model="selectedItem.codigoInventario" disabled>
+                            </div>
+    
+                            <div class="form-group">
+                                <label for="observacion">Observación:</label>
+                                <input type="text" class="form-control" v-model="selectedItem.observacion" disabled>
+                            </div>
+    
+                            <div class="form-group">
+                                <label for="medida">Medida:</label>
+                                <input type="text" class="form-control" v-model="selectedItem.medida" disabled>
+                            </div>
+    
+                            <div class="form-group">
+                                <label for="fecha_venc">Fecha de Vencimiento:</label>
+                                <input type="date" class="form-control" v-model="selectedItem.fechaVencimiento" disabled>
+                            </div>
+    
+                            <!-- Botones Editar y Eliminar -->
+                            <div class="button-group mt-3">
+                                <button class="btn btn-primary" @click="editItem" type="button">Editar</button>
+                                <button class="btn btn-danger" @click="deleteItem(selectedItem.id)" type="button">Eliminar</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</template>
+    </template>
+    
 
 <script>
 import axios from 'axios';
