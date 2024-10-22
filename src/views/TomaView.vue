@@ -6,8 +6,8 @@
         <label for="fecha_toma">Fecha Toma:</label>
         <input type="date" v-model="productData.fechaToma" required disabled>
 
-        <label for="id_producto">Ubicacion:</label><label for="id_producto">Ubicacion:</label>
-        <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000" autofocus @focus="onFocusUbicacion">
+        <label for="id_producto">Ubicacion:</label>
+        <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000" autofocus @keydown="handleKeyDown">
 
         <label for="producto">Producto:</label>
         <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import config from '@/config.js';
+
 export default {
     data() {
         return {
@@ -93,7 +93,8 @@ export default {
                 observacion: '',
                 medida: '',
                 fechaVencimiento: ''
-            } ,scannedCode: ''
+            } 
+            ,scannedCode: ''
         };
     },
     computed: {

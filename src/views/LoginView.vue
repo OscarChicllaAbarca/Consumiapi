@@ -62,7 +62,6 @@ import {
     useRouter
 } from 'vue-router';
 import axios from 'axios';
-import config from '@/config.js';
 export default {
     data() {
         return {
