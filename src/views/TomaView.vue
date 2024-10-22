@@ -138,6 +138,7 @@ export default {
 
             if (response.status === 200) {
                 const data = response.data;
+                console.log('Datos recibidos:', data); // Imprimir los datos en la consola
                 if (Array.isArray(data) && data.length > 0) {
                     const producto = data[0];
                     this.productData.descripcionProducto = producto.descriptionProduct;
