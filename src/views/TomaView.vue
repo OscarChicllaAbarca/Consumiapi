@@ -132,6 +132,7 @@ export default {
 
             const response = await axios.get(`https://fc39-201-234-124-122.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
                 headers: {
+                    'ngrok-skip-browser-warning': 'true',
                     'Authorization': `Basic ${credentials}`
                 },
             });
