@@ -5,10 +5,15 @@
 
         <label for="fecha_toma">Fecha Toma:</label>
         <input type="date" v-model="productData.fechaToma" required disabled>
-
-        <label for="id_producto">Ubicacion:</label><label for="id_producto">Ubicacion:</label>
-        <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000" autofocus @focus="onFocusUbicacion">
-
+        <label for="id_producto">Ubicacion:</label>
+        <input 
+            type="text" 
+            id="id_producto" 
+            v-model="productData.ubicacion" 
+            required 
+            placeholder="00-00-000-000" 
+            autofocus 
+            @focus="onFocusUbicacion">
         <label for="producto">Producto:</label>
         <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
 
@@ -130,7 +135,8 @@ export default {
                     const password = localStorage.getItem('password');
                     const credentials = btoa(`${username}:${password}`);
 
-                    const response = await fetch(`http://192.168.53.166:9090/api/products/b_name/${codigoProductoFinal}`, {
+
+                    const response = await fetch(`https://fc39-201-234-124-122.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
@@ -165,7 +171,7 @@ export default {
 
                 const credentials = btoa(`${username}:${password}`);
 
-                const response = await fetch('http://192.168.53.166:9090/api/tomas', {
+                const response = await fetch('https://fc39-201-234-124-122.ngrok-free.app/api/tomas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

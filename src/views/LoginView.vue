@@ -89,7 +89,7 @@ export default {
             localStorage.setItem('username', this.username); // Guardar el nombre de usuario
             localStorage.setItem('password', this.password); // Guardar la contraseña (no recomendado por motivos de seguridad)
 
-            axios.post('http://https://fc39-201-234-124-122.ngrok-free.app/login', {}, {
+            axios.post('https://fc39-201-234-124-122.ngrok-free.app/login', {}, {
                     headers: {
                         'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
                     }
