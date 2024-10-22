@@ -123,48 +123,41 @@ export default {
     methods: {
 
         async buscarProducto() {
-            if (this.productData.producto !== '') {
-                try {
-                    const codigoProducto = this.productData.producto;
+    if (this.productData.producto && this.productData.producto.trim() !== '') {
+        try {
+            const codigoProducto = this.productData.producto;
+            const codigoProductoFinal = codigoProducto.replace(/\\/g, '');
 
-                    // Comprobar si contiene barra invertida y eliminarla si es necesario
-                    let codigoProductoFinal = codigoProducto;
-                    if (codigoProducto.includes('\\')) {
-                        codigoProductoFinal = codigoProducto.replace(/\\/g, '');
-                    }
+            const credentials = this.getCredentials();
 
-                    const username = localStorage.getItem('username');
-                    const password = localStorage.getItem('password');
-                    const credentials = btoa(`${username}:${password}`);
+            const response = await axios.get(`https://fc39-201-234-124-122.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
+                headers: {
+                    'Authorization': `Basic ${credentials}`
+                },
+            });
 
-                    const response = await axios.get(`https://fc39-201-234-124-122.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
-                        headers: {
-                            'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
-                        },
-                    });
-
-                    // Verificamos la respuesta
-                    if (response.status === 200) {
-                        const data = response.data;
-
-                        // Aquí asumimos que data es un arreglo, así que tomamos el primer elemento
-                        if (data.length > 0) {
-                            const producto = data[0]; // Accedemos al primer elemento del arreglo
-                            this.productData.descripcionProducto = producto.descriptionProduct;
-                            this.productData.unidadMedidaBase = producto.unitMeasurement;
-                        } else {
-                            console.error('No se encontraron productos para el código proporcionado.');
-                            this.productData.descripcionProducto = ''; // Opcional: resetear el campo
-                            this.productData.unidadMedidaBase = ''; // Opcional: resetear el campo
-                        }
-                    } else {
-                        console.error('Error al obtener los datos del producto:', response.status, response.statusText);
-                    }
-                } catch (error) {
-                    console.error('Error al realizar la solicitud:', error);
+            if (response.status === 200) {
+                const data = response.data;
+                if (Array.isArray(data) && data.length > 0) {
+                    const producto = data[0];
+                    this.productData.descripcionProducto = producto.descriptionProduct;
+                    this.productData.unidadMedidaBase = producto.unitMeasurement;
+                } else {
+                    console.error('No se encontraron productos para el código proporcionado.');
+                    this.productData.descripcionProducto = '';
+                    this.productData.unidadMedidaBase = '';
                 }
+            } else {
+                console.error('Error al obtener los datos del producto:', response.status, response.statusText);
             }
-        },
+        } catch (error) {
+            console.error('Error al realizar la solicitud:', error.response ? error.response.data : error.message);
+            alert('Error: ' + (error.response ? error.response.status + ' - ' + error.response.statusText : error.message));
+        }
+    } else {
+        alert('Por favor, ingresa un código de producto válido.');
+    }
+},
         async submitForm() {
             try {
                 const username = localStorage.getItem('username');
