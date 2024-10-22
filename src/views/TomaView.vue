@@ -137,16 +137,15 @@ export default {
                     const password = localStorage.getItem('password');
                     const credentials = btoa(`${username}:${password}`);
 
-
-                    const response = await fetch(`https://fc39-201-234-124-122.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
-                        method: 'GET',
+                    const response = await axios.get(`https://fc39-201-234-124-122.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
                         headers: {
                             'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
-                        }
+                        },
                     });
 
-                    if (response.ok) {
-                        const data = await response.json();
+                    // Verificamos la respuesta
+                    if (response.status === 200) {
+                        const data = response.data;
 
                         // Aquí asumimos que data es un arreglo, así que tomamos el primer elemento
                         if (data.length > 0) {
