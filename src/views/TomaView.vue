@@ -5,6 +5,7 @@
 
         <label for="fecha_toma">Fecha Toma:</label>
         <input type="date" v-model="productData.fechaToma" required disabled>
+
         <label for="id_producto">Ubicacion:</label>
         <input 
             type="text" 
@@ -14,6 +15,7 @@
             placeholder="00-00-000-000" 
             autofocus 
             @focus="onFocusUbicacion">
+
         <label for="producto">Producto:</label>
         <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
 
@@ -218,41 +220,7 @@ export default {
             };
             this.showFields = false;
         },
-
-        ///
-        handleKeydown(event) {
-        if (event.key === 'Tab' || event.key === 'Enter') {
-            event.preventDefault(); // Previene el cambio de foco
-        }
-        },
-        onFocusUbicacion() {
-        this.$refs.ubicacionInput.addEventListener('keydown', this.handleKeydown);
-        console.log("Campo de 'Ubicación' enfocado");
-        },
-        onBlurUbicacion() {
-        this.$refs.ubicacionInput.removeEventListener('keydown', this.handleKeydown);
-        console.log("Campo de 'Ubicación' desenfocado");
-        },
-        onFocusProducto() {
-        this.$refs.productoInput.addEventListener('keydown', this.handleKeydown);
-        console.log("Campo de 'Producto' enfocado");
-        },
-        onBlurProducto() {
-        this.$refs.productoInput.removeEventListener('keydown', this.handleKeydown);
-        console.log("Campo de 'Producto' desenfocado");
-        }
     },
-    mounted() {
-      // Si necesitas asegurar el enfoque en la carga del componente
-      setTimeout(() => {
-        this.$refs.ubicacionInput.focus();
-        console.log("Forzando el enfoque en el campo de 'Ubicación' al montar el componente");
-      }, 300),
-
-      this.$nextTick(() => {
-            this.$refs.ubicacionInput.focus(); // Asegura el enfoque
-        }) // Retardo de 300ms para asegurar que el campo esté listo para el escáner
-    }
 };
 </script>
 
