@@ -234,10 +234,13 @@ export default {
         this.$refs.ubicacionInput.removeEventListener('keydown', this.handleKeydown);
         console.log("Campo de 'Ubicación' desenfocado");
         },
-        mounted() {
-        this.$nextTick(() => {
-            this.$refs.ubicacionInput.focus(); // Asegura el enfoque
-        });
+        onFocusProducto() {
+        this.$refs.productoInput.addEventListener('keydown', this.handleKeydown);
+        console.log("Campo de 'Producto' enfocado");
+        },
+        onBlurProducto() {
+        this.$refs.productoInput.removeEventListener('keydown', this.handleKeydown);
+        console.log("Campo de 'Producto' desenfocado");
         }
     },
     mounted() {
@@ -245,7 +248,11 @@ export default {
       setTimeout(() => {
         this.$refs.ubicacionInput.focus();
         console.log("Forzando el enfoque en el campo de 'Ubicación' al montar el componente");
-      }, 300); // Retardo de 300ms para asegurar que el campo esté listo para el escáner
+      }, 300),
+
+      this.$nextTick(() => {
+            this.$refs.ubicacionInput.focus(); // Asegura el enfoque
+        }) // Retardo de 300ms para asegurar que el campo esté listo para el escáner
     }
 };
 </script>
@@ -258,6 +265,7 @@ export default {
     background-color: #f7f7f7;
     border-radius: 10px;
 }
+
 
 form {
     display: flex;
