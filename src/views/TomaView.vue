@@ -6,8 +6,8 @@
         <label for="fecha_toma">Fecha Toma:</label>
         <input type="date" v-model="productData.fechaToma" required disabled>
 
-        <label for="id_producto">Ubicacion:</label><label for="id_producto">Ubicacion:</label>
-        <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000" autofocus @focus="onFocusUbicacion">
+        <label for="id_producto">Ubicacion:</label>
+        <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000" autofocus @focus="onFocusUbicacion" @blur="onBlurUbicacion" ref="ubicacionInput">
 
         <label for="producto">Producto:</label>
         <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
@@ -93,7 +93,8 @@ export default {
                 observacion: '',
                 medida: '',
                 fechaVencimiento: ''
-            } ,scannedCode: ''
+            },
+            scannedCode: ''
         };
     },
     computed: {
@@ -114,17 +115,7 @@ export default {
 
     },
     methods: {
-        handleKeyDown(event) {
-            // Captura el código escaneado
-            if (event.key === 'Enter') { // Puedes ajustar la tecla según el escáner
-                event.preventDefault(); // Previene el comportamiento por defecto de Enter
-                this.productData.ubicacion = this.scannedCode; // Asigna el código escaneado al campo de ubicación
-                this.scannedCode = ''; // Limpia el código escaneado
-            } else {
-                // Si el código no es el Enter, añade el carácter escaneado
-                this.scannedCode += event.key; // Acumula el texto escaneado
-            }
-        },
+
         async buscarProducto() {
             if (this.productData.producto !== '') {
                 try {
@@ -221,7 +212,28 @@ export default {
                 fechaVencimiento: ''
             };
             this.showFields = false;
-        }
+        },
+        onFocusUbicacion() {
+            // Verificar si es necesario aplicar algún comportamiento adicional al enfocar
+            console.log("Campo de 'Ubicación' enfocado");
+        },
+        onBlurUbicacion() {
+            // Si el campo pierde el foco antes de tiempo, puedes reenfocar con un pequeño retardo
+            if (!this.delaySet) {
+                setTimeout(() => {
+                this.$refs.ubicacionInput.focus();
+                console.log("Reenfocando campo de 'Ubicación'");
+                }, 500); // Retardo de 500ms
+                this.delaySet = true;
+            }
+        },
+    },
+    mounted() {
+      // Si necesitas asegurar el enfoque en la carga del componente
+      setTimeout(() => {
+        this.$refs.ubicacionInput.focus();
+        console.log("Forzando el enfoque en el campo de 'Ubicación' al montar el componente");
+      }, 300); // Retardo de 300ms para asegurar que el campo esté listo para el escáner
     }
 };
 </script>
