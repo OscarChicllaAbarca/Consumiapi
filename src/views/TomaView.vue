@@ -158,6 +158,11 @@ export default {
         alert('Por favor, ingresa un código de producto válido.');
     }
 },
+getCredentials() {
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+    return btoa(`${username}:${password}`);
+},
         async submitForm() {
             try {
                 const username = localStorage.getItem('username');
