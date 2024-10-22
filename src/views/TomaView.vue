@@ -7,7 +7,13 @@
         <input type="date" v-model="productData.fechaToma" required disabled>
 
         <label for="id_producto">Ubicacion:</label>
-        <input type="text" v-model="productData.ubicacion" required placeholder="00-00-000-000" autofocus @focus="onFocusUbicacion" @blur="onBlurUbicacion" ref="ubicacionInput">
+        <input type="text"
+             v-model="productData.ubicacion"
+             required
+             placeholder="00-00-000-000"
+             @focus="onFocusUbicacion"
+             @blur="onBlurUbicacion"
+             ref="ubicacionInput">
 
         <label for="producto">Producto:</label>
         <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
@@ -213,20 +219,26 @@ export default {
             };
             this.showFields = false;
         },
+
+        ///
+        handleKeydown(event) {
+        if (event.key === 'Tab' || event.key === 'Enter') {
+            event.preventDefault(); // Previene el cambio de foco
+        }
+        },
         onFocusUbicacion() {
-            // Verificar si es necesario aplicar algún comportamiento adicional al enfocar
-            console.log("Campo de 'Ubicación' enfocado");
+        this.$refs.ubicacionInput.addEventListener('keydown', this.handleKeydown);
+        console.log("Campo de 'Ubicación' enfocado");
         },
         onBlurUbicacion() {
-            // Si el campo pierde el foco antes de tiempo, puedes reenfocar con un pequeño retardo
-            if (!this.delaySet) {
-                setTimeout(() => {
-                this.$refs.ubicacionInput.focus();
-                console.log("Reenfocando campo de 'Ubicación'");
-                }, 500); // Retardo de 500ms
-                this.delaySet = true;
-            }
+        this.$refs.ubicacionInput.removeEventListener('keydown', this.handleKeydown);
+        console.log("Campo de 'Ubicación' desenfocado");
         },
+        mounted() {
+        this.$nextTick(() => {
+            this.$refs.ubicacionInput.focus(); // Asegura el enfoque
+        });
+        }
     },
     mounted() {
       // Si necesitas asegurar el enfoque en la carga del componente
