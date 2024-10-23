@@ -130,7 +130,7 @@ export default {
 
             const credentials = this.getCredentials();
 
-            const response = await axios.get(`https://fc39-201-234-124-122.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
+            const response = await axios.get(`https://ff5e-181-176-109-201.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
                 headers: {
                     'ngrok-skip-browser-warning': 'true',
                     'Authorization': `Basic ${credentials}`
@@ -172,7 +172,7 @@ getCredentials() {
 
                 const credentials = btoa(`${username}:${password}`);
 
-                const response = await fetch('https://fc39-201-234-124-122.ngrok-free.app/api/tomas', {
+                const response = await fetch('https://ff5e-181-176-109-201.ngrok-free.app/api/tomas', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

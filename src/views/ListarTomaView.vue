@@ -104,7 +104,7 @@ export default {
                 const password = localStorage.getItem('password'); // Obtener la contraseña
                 const credentials = btoa(`${username}:${password}`); // Codificar en Base64
 
-                const response = await axios.get('https://fc39-201-234-124-122.ngrok-free.app/api/tomas', {
+                const response = await axios.get('https://ff5e-181-176-109-201.ngrok-free.app/api/tomas', {
                     headers: {
                         'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
                     }
@@ -130,7 +130,7 @@ export default {
                     const credentials = btoa(`${username}:${password}`); // Codificar en Base64
 
                     // Hacer la solicitud DELETE a la API con autenticación
-                    await axios.delete(`https://fc39-201-234-124-122.ngrok-free.app/api/tomas/${id}`, {
+                    await axios.delete(`https://ff5e-181-176-109-201.ngrok-free.app/api/tomas/${id}`, {
                         headers: {
                             'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
                         }
