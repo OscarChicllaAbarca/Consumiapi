@@ -20,8 +20,11 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <tr v-if="tomas.length === 0">
+                                <td colspan="8" class="text-center">No hay datos disponibles</td>
+                            </tr>
                             <tr v-for="(item, index) in tomas" :key="index" @click="selectRow(item)" :class="{ 'table-active': selectedItem === item }">
-                                <td>{{ index + 1 }}</td>
+                                <td>{{ index + 1 }}</td> <!-- Este índice es correcto -->
                                 <td>{{ item.producto }}</td>
                                 <td>{{ item.descripcionProducto }}</td>
                                 <td>{{ item.ubicacion }}</td>
@@ -104,13 +107,16 @@ export default {
                 const password = localStorage.getItem('password'); // Obtener la contraseña
                 const credentials = btoa(`${username}:${password}`); // Codificar en Base64
 
-                const response = await axios.get('https://99d6-181-176-109-201.ngrok-free.app/api/tomas', {
+                const response = await axios.get('https://d19c-181-176-109-201.ngrok-free.app/api/tomas', {
                     headers: {
+                        'ngrok-skip-browser-warning': 'true',
                         'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
                     }
                 });
-
+                console.log("Datos obtenidos:", response.data);
+                
                 this.tomas = response.data; // Guardar los datos de la API en la variable 'tomas'
+                console.log("Número de registros:", this.tomas.length);
             } catch (error) {
                 console.error('Error al obtener los datos:', error);
             }
@@ -130,8 +136,9 @@ export default {
                     const credentials = btoa(`${username}:${password}`); // Codificar en Base64
 
                     // Hacer la solicitud DELETE a la API con autenticación
-                    await axios.delete(`https://99d6-181-176-109-201.ngrok-free.app/api/tomas/${id}`, {
+                    await axios.delete(`https://d19c-181-176-109-201.ngrok-free.app/api/tomas/${id}`, {
                         headers: {
+                            'ngrok-skip-browser-warning': 'true',
                             'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
                         }
                     });
