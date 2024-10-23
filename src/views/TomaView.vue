@@ -9,7 +9,6 @@
         <label for="id_producto">Ubicación:</label>
             <input 
                 type="text" 
-                id="id_producto" 
                 v-model="productData.ubicacion" 
                 required 
                 placeholder="01-00-000-000" 
