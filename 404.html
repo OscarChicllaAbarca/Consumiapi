@@ -6,12 +6,9 @@
     <title>Página no encontrada</title>
     <script>
         window.onload = function() {
-            // Verificar si document.referrer es diferente de la URL actual
-            if (document.referrer && document.referrer !== window.location.href) {
-                window.location.href = document.referrer;
-            } else {
+            
                 window.location.href = '/Consumiapi/';
-            }
+            
         };
     </script>   
 </head>
