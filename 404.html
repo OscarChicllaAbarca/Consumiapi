@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página no encontrada</title>
-        
+    <script>
+        window.onload = function() {
+            // Verificar si document.referrer es diferente de la URL actual
+            if (document.referrer && document.referrer !== window.location.href) {
+                window.location.href = document.referrer;
+            } else {
+                window.location.href = '/Consumiapi/';
+            }
+        };
+    </script>   
 </head>
 <body>
     <h1>404 - Página no encontrada</h1>
