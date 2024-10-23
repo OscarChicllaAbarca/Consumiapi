@@ -13,16 +13,11 @@
                 v-model="productData.ubicacion" 
                 required 
                 placeholder="00-00-000-000" 
-                autofocus 
-                @keydown="handlePdaInput('ubicacion', $event)"> <!-- Evento para PDA -->
+                autofocus> <!-- Evento para PDA -->
 
         <label for="producto">Producto:</label>
-            <input type="text" 
-                v-model="productData.producto" 
-                @input="buscarProducto" 
-                required 
-                :class="{'is-invalid': productData.producto === ''}"
-                @keydown="handlePdaInput('producto', $event)"> <!-- Evento para PDA -->
+        <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
+
 
         <label for="descripcion">Descripción de Producto:</label>
         <input type="text" v-model="productData.descripcionProducto" required readonly>
@@ -126,21 +121,7 @@ export default {
 
     },
     methods: {
-        handlePdaInput(field, event) {
-            // Captura el valor del teclado y actualiza el modelo correspondiente
-            if (event.key === 'Enter') {
-                const value = event.target.value.trim();
-                if (field === 'ubicacion') {
-                    this.productData.ubicacion = value;
-                } else if (field === 'producto') {
-                    this.productData.producto = value;
-                    this.buscarProducto(); // Llamar a la función buscarProducto para obtener detalles
-                } else if (field === 'codigoInventario') {
-                    this.productData.codigoInventario = value;
-                }
-                event.target.value = ''; // Limpiar el campo después de usarlo
-            }
-        },
+        
         async buscarProducto() {
         if (this.productData.producto && this.productData.producto.trim() !== '') {
             try {
