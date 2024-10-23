@@ -12,7 +12,7 @@
                 id="id_producto" 
                 v-model="productData.ubicacion" 
                 required 
-                placeholder="00-00-000-000" 
+                placeholder="01-00-000-000" 
                 autofocus> <!-- Evento para PDA -->
 
         <label for="producto">Producto:</label>
