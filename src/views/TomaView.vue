@@ -6,18 +6,23 @@
         <label for="fecha_toma">Fecha Toma:</label>
         <input type="date" v-model="productData.fechaToma" required disabled>
 
-        <label for="id_producto">Ubicacion:</label>
-        <input 
-            type="text" 
-            id="id_producto" 
-            v-model="productData.ubicacion" 
-            required 
-            placeholder="00-00-000-000" 
-            autofocus 
-            @focus="onFocusUbicacion">
+        <label for="id_producto">Ubicación:</label>
+            <input 
+                type="text" 
+                id="id_producto" 
+                v-model="productData.ubicacion" 
+                required 
+                placeholder="00-00-000-000" 
+                autofocus 
+                @keydown="handlePdaInput('ubicacion', $event)"> <!-- Evento para PDA -->
 
         <label for="producto">Producto:</label>
-        <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
+            <input type="text" 
+                v-model="productData.producto" 
+                @input="buscarProducto" 
+                required 
+                :class="{'is-invalid': productData.producto === ''}"
+                @keydown="handlePdaInput('producto', $event)"> <!-- Evento para PDA -->
 
         <label for="descripcion">Descripción de Producto:</label>
         <input type="text" v-model="productData.descripcionProducto" required readonly>
@@ -121,21 +126,35 @@ export default {
 
     },
     methods: {
-
+        handlePdaInput(field, event) {
+            // Captura el valor del teclado y actualiza el modelo correspondiente
+            if (event.key === 'Enter') {
+                const value = event.target.value.trim();
+                if (field === 'ubicacion') {
+                    this.productData.ubicacion = value;
+                } else if (field === 'producto') {
+                    this.productData.producto = value;
+                    this.buscarProducto(); // Llamar a la función buscarProducto para obtener detalles
+                } else if (field === 'codigoInventario') {
+                    this.productData.codigoInventario = value;
+                }
+                event.target.value = ''; // Limpiar el campo después de usarlo
+            }
+        },
         async buscarProducto() {
-    if (this.productData.producto && this.productData.producto.trim() !== '') {
-        try {
-            const codigoProducto = this.productData.producto;
-            const codigoProductoFinal = codigoProducto.replace(/\\/g, '');
+        if (this.productData.producto && this.productData.producto.trim() !== '') {
+            try {
+                const codigoProducto = this.productData.producto;
+                const codigoProductoFinal = codigoProducto.replace(/\\/g, '');
 
-            const credentials = this.getCredentials();
+                const credentials = this.getCredentials();
 
-            const response = await axios.get(`https://99d6-181-176-109-201.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
-                headers: {
-                    'ngrok-skip-browser-warning': 'true',
-                    'Authorization': `Basic ${credentials}`
-                },
-            });
+                const response = await axios.get(`https://99d6-181-176-109-201.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'Authorization': `Basic ${credentials}`
+                    },
+         });
 
             if (response.status === 200) {
                 const data = response.data;
@@ -160,11 +179,11 @@ export default {
         alert('Por favor, ingresa un código de producto válido.');
     }
 },
-getCredentials() {
-    const username = localStorage.getItem('username');
-    const password = localStorage.getItem('password');
-    return btoa(`${username}:${password}`);
-},
+        getCredentials() {
+            const username = localStorage.getItem('username');
+            const password = localStorage.getItem('password');
+            return btoa(`${username}:${password}`);
+        },
         async submitForm() {
             try {
                 const username = localStorage.getItem('username');
