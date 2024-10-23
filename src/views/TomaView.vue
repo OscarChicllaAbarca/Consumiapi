@@ -16,7 +16,12 @@
                 autofocus> <!-- Evento para PDA -->
 
         <label for="producto">Producto:</label>
-        <input type="text" v-model="productData.producto" @input="buscarProducto" required :class="{'is-invalid': productData.producto === ''}">
+        <input 
+        type="text" 
+        v-model="productData.producto" 
+        @input="buscarProducto" 
+        required :class="{'is-invalid': productData.producto === ''}"
+        >
 
 
         <label for="descripcion">Descripción de Producto:</label>
