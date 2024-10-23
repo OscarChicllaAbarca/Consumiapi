@@ -13,6 +13,7 @@
                 required 
                 placeholder="01-00-000-000" 
                 autofocus> <!-- Evento para PDA -->
+        
 
         <label for="producto">Producto:</label>
         <input 
@@ -21,7 +22,6 @@
         @input="buscarProducto" 
         required :class="{'is-invalid': productData.producto === ''}"
         >
-
 
         <label for="descripcion">Descripción de Producto:</label>
         <input type="text" v-model="productData.descripcionProducto" required readonly>
@@ -104,7 +104,8 @@ export default {
                 observacion: '',
                 medida: '',
                 fechaVencimiento: ''
-            } ,scannedCode: ''
+            },
+            scannedCode: ''
         };
     },
     computed: {
@@ -125,45 +126,44 @@ export default {
 
     },
     methods: {
-        
         async buscarProducto() {
-        if (this.productData.producto && this.productData.producto.trim() !== '') {
-            try {
-                const codigoProducto = this.productData.producto;
-                const codigoProductoFinal = codigoProducto.replace(/\\/g, '');
+            if (this.productData.producto && this.productData.producto.trim() !== '') {
+                try {
+                    const codigoProducto = this.productData.producto;
+                    const codigoProductoFinal = codigoProducto.replace(/\\/g, '');
 
-                const credentials = this.getCredentials();
+                    const credentials = this.getCredentials();
 
-                const response = await axios.get(`https://d19c-181-176-109-201.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
-                    headers: {
-                        'ngrok-skip-browser-warning': 'true',
-                        'Authorization': `Basic ${credentials}`
-                    },
-         });
+                    const response = await axios.get(`https://d19c-181-176-109-201.ngrok-free.app/api/products/b_name/${codigoProductoFinal}`, {
+                        headers: {
+                            'ngrok-skip-browser-warning': 'true',
+                            'Authorization': `Basic ${credentials}`
+                        },
+                    });
 
-            if (response.status === 200) {
-                const data = response.data;
-                console.log('Datos recibidos:', data); // Imprimir los datos en la consola
-                if (Array.isArray(data) && data.length > 0) {
-                    const producto = data[0];
-                    this.productData.descripcionProducto = producto.descriptionProduct;
-                    this.productData.unidadMedidaBase = producto.unitMeasurement;
-                } else {
-                    console.error('No se encontraron productos para el código proporcionado.');
-                    this.productData.descripcionProducto = '';
-                    this.productData.unidadMedidaBase = '';
+                    if (response.status === 200) {
+                        const data = response.data;
+                        console.log('Datos recibidos:', data); // Imprimir los datos en la consola
+                        if (Array.isArray(data) && data.length > 0) {
+                            const producto = data[0];
+                            this.productData.descripcionProducto = producto.descriptionProduct;
+                            this.productData.unidadMedidaBase = producto.unitMeasurement;
+                        } else {
+                            console.error('No se encontraron productos para el código proporcionado.');
+                            this.productData.descripcionProducto = '';
+                            this.productData.unidadMedidaBase = '';
+                        }
+                    } else {
+                        console.error('Error al obtener los datos del producto:', response.status, response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Error al realizar la solicitud:', error.response ? error.response.data : error.message);
+                    alert('Error: ' + (error.response ? error.response.status + ' - ' + error.response.statusText : error.message));
                 }
             } else {
-                console.error('Error al obtener los datos del producto:', response.status, response.statusText);
+                alert('Por favor, ingresa un código de producto válido.');
             }
-        } catch (error) {
-            console.error('Error al realizar la solicitud:', error.response ? error.response.data : error.message);
-            alert('Error: ' + (error.response ? error.response.status + ' - ' + error.response.statusText : error.message));
-        }
-    } else {
-        alert('Por favor, ingresa un código de producto válido.');
-    }
-},
+        },
         getCredentials() {
             const username = localStorage.getItem('username');
             const password = localStorage.getItem('password');
@@ -223,7 +223,9 @@ export default {
             };
             this.showFields = false;
         },
-    },
+
+
+    }
 };
 </script>
 
@@ -235,7 +237,6 @@ export default {
     background-color: #f7f7f7;
     border-radius: 10px;
 }
-
 
 form {
     display: flex;
