@@ -68,8 +68,7 @@
 
                         <div class="form-group">
                             <label for="fecha_venc">Fecha de Vencimiento:</label>
-                            <input type="date" class="form-control" v-model="selectedItem.fechaVencimiento" id="fecha_venc" :class="{'is-invalid': !validarFechaVencimiento()}" disabled>
-                            <span v-if="!validarFechaVencimiento()" class="text-danger">La fecha de vencimiento no puede ser anterior a la fecha actual.</span>
+                            <input type="date" class="form-control" v-model="selectedItem.fechaVencimiento" disabled>
                         </div>
 
                         <!-- Botones Editar y Eliminar -->
@@ -106,7 +105,7 @@ export default {
                 const password = localStorage.getItem('password'); // Obtener la contraseña
                 const credentials = btoa(`${username}:${password}`); // Codificar en Base64
 
-                const response = await axios.get('https://d19c-181-176-109-201.ngrok-free.app/api/tomas', {
+                const response = await axios.get('https://8a2d-201-234-124-122.ngrok-free.app/api/tomas', {
                     headers: {
                         'ngrok-skip-browser-warning': 'true',
                         'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
@@ -135,7 +134,7 @@ export default {
                     const credentials = btoa(`${username}:${password}`); // Codificar en Base64
 
                     // Hacer la solicitud DELETE a la API con autenticación
-                    await axios.delete(`https://d19c-181-176-109-201.ngrok-free.app/api/tomas/${id}`, {
+                    await axios.delete(`https://8a2d-201-234-124-122.ngrok-free.app/api/tomas/${id}`, {
                         headers: {
                             'ngrok-skip-browser-warning': 'true',
                             'Authorization': `Basic ${credentials}` // Agregar el encabezado de autorización
