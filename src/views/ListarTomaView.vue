@@ -1,93 +1,92 @@
 <template>
-    <div class="container">
-        <!-- Estructura responsiva usando Bootstrap -->
-        <div class="row">
-            <!-- Tabla de productos -->
-            <div class="col-lg-8 col-md-12">
-                <h2>Listado de Productos</h2>
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="thead-light">
-                            <tr>
-                                <th>#</th>
-                                <th>Producto</th>
-                                <th>Descripción de Producto</th>
-                                <th>Ubicación</th>
-                                <th>Fecha Toma</th>
-                                <th>Centro</th>
-                                <th>Lote</th>
-                                <th>Cantidad</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-if="tomas.length === 0">
-                                <td colspan="8" class="text-center">No hay datos disponibles</td>
-                            </tr>
-                            <tr v-for="(item, index) in tomas" :key="index" @click="selectRow(item)" :class="{ 'table-active': selectedItem === item }">
-                                <td>{{ index + 1 }}</td> <!-- Este índice es correcto -->
-                                <td>{{ item.producto }}</td>
-                                <td>{{ item.descripcionProducto }}</td>
-                                <td>{{ item.ubicacion }}</td>
-                                <td>{{ formatDate(item.fechaToma) }}</td>
-                                <td>{{ item.centro }}</td>
-                                <td>{{ item.lote }}</td>
-                                <td>{{ item.cantidad }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+<div class="container">
+    <!-- Estructura responsiva usando Bootstrap -->
+    <div class="row">
+        <!-- Tabla de productos -->
+        <div class="col-lg-8 col-md-12">
+            <h2>Listado de Productos</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Producto</th>
+                            <th>Descripción de Producto</th>
+                            <th>Ubicación</th>
+                            <th>Fecha Toma</th>
+                            <th>Centro</th>
+                            <th>Lote</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-if="tomas.length === 0">
+                            <td colspan="8" class="text-center">No hay datos disponibles</td>
+                        </tr>
+                        <tr v-for="(item, index) in tomas" :key="index" @click="selectRow(item)" :class="{ 'table-active': selectedItem === item }">
+                            <td>{{ index + 1 }}</td>
+                            <td>{{ item.producto }}</td>
+                            <td>{{ item.descripcionProducto }}</td>
+                            <td>{{ item.ubicacion }}</td>
+                            <td>{{ formatDate(item.fechaToma) }}</td>
+                            <td>{{ item.centro }}</td>
+                            <td>{{ item.lote }}</td>
+                            <td>{{ item.cantidad }}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-    
-            <!-- Panel de detalles -->
-            <div class="col-lg-4 col-md-12" v-if="selectedItem">
-                <div class="details-panel card">
-                    <div class="card-body">
-                        <h5 class="card-title">Detalles del Producto</h5>
-                        <button class="close" @click="closePanel">&times;</button>
-    
-                        <form @submit.prevent="submitForm" class="details-form">
-                            <div class="form-group">
-                                <label for="unidad_medida_base">Unidad de Medida Base:</label>
-                                <input type="text" class="form-control" v-model="selectedItem.unidadMedidaBase" disabled>
-                            </div>
-    
-                            <div class="form-group">
-                                <label for="codigo_invent">Código de Inventario:</label>
-                                <input type="text" class="form-control" v-model="selectedItem.codigoInventario" disabled>
-                            </div>
-    
-                            <div class="form-group">
-                                <label for="observacion">Observación:</label>
-                                <input type="text" class="form-control" v-model="selectedItem.observacion" disabled>
-                            </div>
-    
-                            <div class="form-group">
-                                <label for="medida">Medida:</label>
-                                <input type="text" class="form-control" v-model="selectedItem.medida" disabled>
-                            </div>
-    
-                            <div class="form-group">
-                                <label for="fecha_venc">Fecha de Vencimiento:</label>
-                                <input type="date" class="form-control" v-model="selectedItem.fechaVencimiento" disabled>
-                            </div>
-    
-                            <!-- Botones Editar y Eliminar -->
-                            <div class="button-group mt-3">
-                               <!-- <button class="btn btn-primary" @click="editItem" type="button">Editar</button>-->
-                                <button class="btn btn-danger" @click="deleteItem(selectedItem.id)" type="button">Eliminar</button>
-                            </div>
-                        </form>
-                    </div>
+        </div>
+
+        <!-- Panel de detalles -->
+        <div class="col-lg-4 col-md-12" v-if="selectedItem">
+            <div class="details-panel card">
+                <div class="card-body">
+                    <h5 class="card-title">Detalles del Producto</h5>
+                    <button class="close" @click="closePanel">&times;</button>
+
+                    <form @submit.prevent="submitForm" class="details-form">
+                        <div class="form-group">
+                            <label for="unidad_medida_base">Unidad de Medida Base:</label>
+                            <input type="text" class="form-control" v-model="selectedItem.unidadMedidaBase" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="codigo_invent">Código de Inventario:</label>
+                            <input type="text" class="form-control" v-model="selectedItem.codigoInventario" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="observacion">Observación:</label>
+                            <input type="text" class="form-control" v-model="selectedItem.observacion" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="medida">Medida:</label>
+                            <input type="text" class="form-control" v-model="selectedItem.medida" disabled>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fecha_venc">Fecha de Vencimiento:</label>
+                            <input type="date" class="form-control" v-model="selectedItem.fechaVencimiento" id="fecha_venc" :class="{'is-invalid': !validarFechaVencimiento()}" disabled>
+                            <span v-if="!validarFechaVencimiento()" class="text-danger">La fecha de vencimiento no puede ser anterior a la fecha actual.</span>
+                        </div>
+
+                        <!-- Botones Editar y Eliminar -->
+                        <div class="button-group mt-3">
+                            <!-- <button class="btn btn-primary" @click="editItem" type="button">Editar</button>-->
+                            <button class="btn btn-danger" @click="deleteItem(selectedItem.id)" type="button">Eliminar</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    </template>
-    
+</div>
+</template>
 
 <script>
 import axios from 'axios';
-import config from '@/config.js';
 
 export default {
     data() {
@@ -114,7 +113,7 @@ export default {
                     }
                 });
                 console.log("Datos obtenidos:", response.data);
-                
+
                 this.tomas = response.data; // Guardar los datos de la API en la variable 'tomas'
                 console.log("Número de registros:", this.tomas.length);
             } catch (error) {
